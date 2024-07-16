@@ -7,6 +7,7 @@ import { blogPosts, projects } from "@/data/projects";
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 import { lerp } from "@/utils/lerp";
+import Canvas from "./_components/canvas";
 
 const MainPage = () => {
 	const mainRef = useRef<HTMLElement | null>(null);
@@ -17,13 +18,8 @@ const MainPage = () => {
 	const projectsStickyRef = useRef<HTMLDivElement | null>(null);
 	const projectsSliderRef = useRef<HTMLDivElement | null>(null);
 	const blogSectionRef = useRef<HTMLElement | null>(null);
-	const blogPostsRefs = useRef<(HTMLDivElement | null)[]>([]);
-	const setBlogPostRef = useCallback(
-		(index: number, element: HTMLDivElement | null) => {
-			blogPostsRefs.current[index] = element;
-		},
-		[]
-	);
+	const blogPostsRefs = useRef<Array<HTMLDivElement>>([]);
+
 	const circleSectionRef = useRef<HTMLElement | null>(null);
 	const circleRef = useRef<HTMLDivElement | null>(null);
 	const dContainerRef = useRef<HTMLDivElement | null>(null);
@@ -31,6 +27,38 @@ const MainPage = () => {
 	const rightTextRef = useRef<HTMLParagraphElement | null>(null);
 
 	useEffect(() => {
+		const main = mainRef.current;
+
+		const textReveals = [...document.querySelectorAll(".text__reveal")];
+		let callback = (entries: any[]) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					console.log(entry);
+					[...entry.target.querySelectorAll("span")].forEach((span, idx) => {
+						setTimeout(
+							() => {
+								span.style.transform = `translateY(0)`;
+							},
+							(idx + 1) * 50
+						);
+					});
+				}
+			});
+		};
+		let options = {
+			rootMargin: "0px",
+			threshold: 1.0,
+		};
+		let observer = new IntersectionObserver(callback, options);
+		textReveals.forEach((text) => {
+			let string = (text as HTMLElement).innerText;
+			let html = "";
+			for (let i = 0; i < string.length; i++) {
+				html += `<span>${string[i]}</span>`;
+			}
+			text.innerHTML = html;
+			observer.observe(text);
+		});
 		const animateVideo = () => {
 			const videoSection = videoSectionRef.current;
 			const headerLeft = headerLeftRef.current;
@@ -94,22 +122,19 @@ const MainPage = () => {
 			projectCurrentX = lerp(projectCurrentX, projectTargetX, 0.1);
 			projectSlider.style.transform = `translate3d(${-projectCurrentX}vw, 0 , 0)`;
 		};
-		const animateBlogPosts = () => {
+		const scrollBlogPosts = () => {
 			const blogSection = blogSectionRef.current;
 			const blogPosts = blogPostsRefs.current;
 			if (!blogSection || !blogPosts) return;
 			let blogSectionTop = blogSection?.getBoundingClientRect().top ?? 0;
 
 			for (let i = 0; i < blogPosts.length; i++) {
-				if (blogPosts[i] && blogPosts[i].parentElement) {
-					const parentElement = blogPosts[i].parentElement;
-					if (parentElement.getBoundingClientRect().top <= 1) {
-						let offset =
-							(blogSectionTop + window.innerHeight * (i + 1)) * 0.0005;
-						offset = offset < -1 ? -1 : offset >= 0 ? 0 : offset;
-						if (i === 1) console.log(offset); // Assuming you want to log the offset for the second post
-						blogPosts[i].style.transform = `scale(${1 + offset})`;
-					}
+				const parentElement = blogPosts[i].parentElement;
+				if (parentElement!.getBoundingClientRect().top <= 1) {
+					let offset = (blogSectionTop + window.innerHeight * (i + 1)) * 0.0005;
+					offset = offset < -1 ? -1 : offset >= 0 ? 0 : offset;
+					if (i === 1) console.log(offset); // Assuming you want to log the offset for the second post
+					blogPosts[i].style.transform = `scale(${1 + offset})`;
 				}
 			}
 		};
@@ -138,8 +163,11 @@ const MainPage = () => {
 			leftText.style.transform = `translateX(${-textTrans}px)`;
 			rightText.style.transform = `translateX(${textTrans}px)`;
 		};
-
-		const main = mainRef.current;
+		function animate() {
+			animateProjects();
+			requestAnimationFrame(animate);
+		}
+		animate();
 		if (!main) return;
 		main.addEventListener("scroll", () => {
 			animateVideo();
@@ -150,6 +178,8 @@ const MainPage = () => {
 		return () => {
 			main.removeEventListener("scroll", () => {
 				animateVideo();
+				scrollBlogPosts();
+
 				scrollCircle();
 				scrollDiscover();
 			});
@@ -160,18 +190,19 @@ const MainPage = () => {
 
 	return (
 		<>
-			<div className="line__container">
+			{/* <div className="line__container">
 				<div className="separator"></div>
 				<div className="separator"></div>
 				<div className="separator"></div>
-			</div>
-
+			</div> */}
 			<main ref={mainRef}>
 				<div className="scroll__container">
-					<section id="hero">
+					<section className="relative" id="hero">
+						<Canvas />
+
 						<div className="hero__container">
 							<div className="hero__title">
-								<h1 className="hero__title__header text__reveal">ZOCK</h1>
+								<h1 className="hero__title__header text__reveal ">ZOCK</h1>
 							</div>
 							<div className="hero__cta">
 								<h4>STUDIO</h4>
@@ -242,7 +273,11 @@ const MainPage = () => {
 						{blogPosts.map((post, index) => (
 							<div className="blog__post" key={index}>
 								<div
-									ref={(element) => setBlogPostRef(index, element)}
+									ref={(element) => {
+										if (element !== null) {
+											blogPostsRefs.current[index] = element;
+										}
+									}}
 									className="post">
 									<div className="post__image__container">
 										<Image
@@ -296,7 +331,7 @@ const MainPage = () => {
 					</section>
 
 					<section id="footer">
-						<div className="footer__container">
+						<div className="footer__container h-96">
 							<div className="footer__title">
 								<h2 className="text__reveal">ZOCK</h2>
 							</div>

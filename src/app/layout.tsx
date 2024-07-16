@@ -2,20 +2,25 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const code = localFont({
+const codeBold = localFont({
 	src: [
 		{
 			path: "./fonts/CODE_Bold.otf",
 			weight: "800",
 			style: "normal",
 		},
+	],
+	variable: "--code-bold",
+});
+const codeLight = localFont({
+	src: [
 		{
 			path: "./fonts/CODE_Light.otf",
 			weight: "200",
 			style: "normal",
 		},
 	],
-	variable: "--font-code",
+	variable: "--code-light",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +35,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={code.className}>{children}</body>
+			<body className={` ${codeLight.className} ${codeBold.className}`}>
+				{children}
+			</body>
 		</html>
 	);
 }

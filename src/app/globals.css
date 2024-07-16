@@ -1,17 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/*
-@font-face {
-	font-family: codelight;
-	src: url("assets/font/CODE_Light.otf") format("opentype");
-}
-
-@font-face {
-	font-family: codebold;
-	font-weight: bold;
-	src: url("assets/font/CODE_Bold.otf") format("opentype");
-} */
 
 :root {
 	--max-width: 1440px;
@@ -22,7 +11,6 @@
 	padding: 0;
 	box-sizing: border-box;
 	color: white;
-	font-family: "codelight", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-weight: 400;
 }
@@ -33,6 +21,18 @@ body {
 	overscroll-behavior: none;
 	width: 100%;
 	height: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--code-bold);
+}
+
+::-webkit-scrollbar {
+	width: 0px;
 }
 
 .line__container {
