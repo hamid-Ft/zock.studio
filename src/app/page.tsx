@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 import { lerp } from "@/utils/lerp";
 import Canvas from "./_components/canvas";
+import VideoComponent from "./_components/videoComponent";
 
 const MainPage = () => {
 	const mainRef = useRef<HTMLElement | null>(null);
@@ -195,9 +196,9 @@ const MainPage = () => {
 				<div className="separator"></div>
 				<div className="separator"></div>
 			</div> */}
-			<main ref={mainRef}>
+			<main className="relative" ref={mainRef}>
 				<div className="scroll__container">
-					<section className="relative" id="hero">
+					<section id="hero">
 						<Canvas />
 
 						<div className="hero__container">
@@ -247,13 +248,14 @@ const MainPage = () => {
 									{projects.map((project, index) => (
 										<div key={index} className={`project ${project.pos}`}>
 											<div className="image__container">
-												<Image
-													className="project__image"
-													alt="project"
-													src={project.image}
-													width={300}
-													height={250}
-												/>
+												{project.image && (
+													<>
+														<VideoComponent
+															video={project.video}
+															image={project.image}
+														/>
+													</>
+												)}
 											</div>
 											<div className="project__details">
 												<p className="project__title">{project.name}</p>
