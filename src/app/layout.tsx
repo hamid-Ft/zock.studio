@@ -15,8 +15,8 @@ const codeBold = localFont({
 const codeLight = localFont({
 	src: [
 		{
-			path: "./fonts/CODE_Light.otf",
-			weight: "200",
+			path: "./fonts/CODE_Bold.otf",
+			weight: "800",
 			style: "normal",
 		},
 	],

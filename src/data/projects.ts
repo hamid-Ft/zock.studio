@@ -1,70 +1,84 @@
 // Projects
-export type Project = {
+export type tech = {
 	name: string;
 	type: string;
 	pos: string;
 	image?: string;
 	url?: string;
-	video?: string;
 };
 
-export const projects: Project[] = [
+export const projects: tech[] = [
 	{
-		name: "DESNA",
-		type: "WEB DESIGN",
+		name: "NextJS",
+		type: "FrontEnd",
 		pos: "start",
-		url: "https://desna.ir",
-		image: "/desna-png.png",
-		video: "/desna-mp4.mp4",
+		image: "/next-js.svg",
 	},
 	{
-		name: "PROJECT 2",
-		type: "GRAPHIC DESIGN",
+		name: "PostGreSQL",
+		type: "Database",
 		pos: "mid",
-
-		// "https://images.unsplash.com/reserve/aOcWqRTfQ12uwr3wWevA_14401305508_804b300054_o.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2952&q=80",
+		image: "/postqresql.svg",
 	},
 	{
-		name: "PROJECT 3",
-		type: "TYPE DESIGN",
+		name: "Prisma",
+		type: "BackEnd",
 		pos: "end",
-
-		// "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=2487&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		image: "/prisma.svg",
 	},
 	{
-		name: "PROJECT 4",
-		type: "LOGO DESIGN",
+		name: ".Net Core",
+		type: "BackEnd",
 		pos: "mid",
-
-		// "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2564&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		image: "/net-core.svg",
 	},
 	{
-		name: "PROJECT 5",
-		type: "BRANDING",
-		pos: "end",
-
-		// "https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&q=80&w=2487&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-	},
-	{
-		name: "PROJECT 6",
-		type: "VIDEO GRAPHY ",
-		pos: "mid",
-
-		// "https://images.unsplash.com/photo-1561998338-13ad7883b20f?auto=format&fit=crop&q=80&w=2487&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-	},
-	{
-		name: "PROJECT 7",
-		type: "STOP MOTION",
+		name: "ThreeJS",
+		type: "3D Desing",
 		pos: "start",
-
-		// "https://images.unsplash.com/photo-1454117096348-e4abbeba002c?auto=format&fit=crop&q=80&w=2602&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		image: "/three-js.svg",
 	},
 	{
-		name: "PROJECT 8",
-		type: "STORY BOARD",
+		name: "Redis",
+		type: "Database",
+		pos: "mid",
+		image: "/redis.svg",
+	},
+	{
+		name: "Wordpress",
+		type: "CMS fullstack",
+		pos: "start",
+		image: "/wordpress.svg",
+	},
+	{
+		name: "TurboRepo",
+		type: "LargeScake Deployment",
 		pos: "end",
-
-		// "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&q=80&w=2574&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		image: "/turborepo.svg",
+	},
+	{
+		name: "Nginx",
+		type: "server ",
+		pos: "mid",
+		image: "/nginx.svg",
+	},
+	{
+		name: "React",
+		type: "FrontEnd",
+		pos: "start",
+		image: "/react.svg",
+	},
+	{
+		name: "MongoDB",
+		type: "database",
+		pos: "mid",
+		image: "/mongodb.svg",
+	},
+	{
+		name: "Docker",
+		type: "Containerization",
+		pos: "end",
+		image: "/docker.svg",
 	},
 ];
 

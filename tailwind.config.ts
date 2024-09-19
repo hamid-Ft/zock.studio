@@ -25,12 +25,14 @@ type ColorObject = {
 };
 
 export const tailwindColors: ColorObject = {
+	desna: "#f1683a",
+	royaljeans: "#007BEC",
 	current: "currentColor",
 	transparent: "transparent",
 	white: "#F9F9F9",
-	primary: "#007BEC",
+	green: "#00ff5e",
 	"primary-content": "#FFFFFF",
-	"primary-focus": generateDarkenColorFrom("#007BEC"),
+	"primary-focus": generateDarkenColorFrom("#00ff5e"),
 	secondary: "#6c5ce7",
 	"secondary-content": "#FFFFFF",
 	"secondary-focus": generateDarkenColorFrom("#6c5ce7"),
@@ -62,7 +64,6 @@ export const tailwindColors: ColorObject = {
 const config: Config = {
 	content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
-		colors: tailwindColors,
 		container: {
 			center: true,
 			padding: {
@@ -72,6 +73,7 @@ const config: Config = {
 			},
 		},
 		extend: {
+			colors: tailwindColors,
 			backgroundImage: {
 				"hero-pattern": "url('/images/tile.svg')",
 			},

@@ -5,10 +5,12 @@ import AboutSection from "./_components/about-section";
 import VideoSection from "./_components/video-section";
 import { blogPosts, projects } from "@/data/projects";
 import Image from "next/image";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { lerp } from "@/utils/lerp";
 import Canvas from "./_components/canvas";
 import VideoComponent from "./_components/videoComponent";
+import ProjectSlider from "./_components/projects-slider";
+import StartsCanvas from "./_components/start-canvas";
 
 const MainPage = () => {
 	const mainRef = useRef<HTMLElement | null>(null);
@@ -36,12 +38,9 @@ const MainPage = () => {
 				if (entry.isIntersecting) {
 					console.log(entry);
 					[...entry.target.querySelectorAll("span")].forEach((span, idx) => {
-						setTimeout(
-							() => {
-								span.style.transform = `translateY(0)`;
-							},
-							(idx + 1) * 50
-						);
+						setTimeout(() => {
+							span.style.transform = `translateY(0)`;
+						}, (idx + 1) * 50);
 					});
 				}
 			});
@@ -93,16 +92,16 @@ const MainPage = () => {
 			window.innerWidth <= 600
 				? percentages.small
 				: window.innerWidth <= 1100
-					? percentages.medium
-					: percentages.large;
+				? percentages.medium
+				: percentages.large;
 
 		const setLimit = () => {
 			limit =
 				window.innerWidth <= 600
 					? percentages.small
 					: window.innerWidth <= 1100
-						? percentages.medium
-						: percentages.large;
+					? percentages.medium
+					: percentages.large;
 		};
 
 		const animateProjects = () => {
@@ -123,6 +122,33 @@ const MainPage = () => {
 			projectCurrentX = lerp(projectCurrentX, projectTargetX, 0.1);
 			projectSlider.style.transform = `translate3d(${-projectCurrentX}vw, 0 , 0)`;
 		};
+		// const animateProjects = () => {
+		// 	const projectsSticky = projectsStickyRef.current;
+		// 	const projectSlider = projectsSliderRef.current;
+		// 	if (
+		// 		!projectsSticky ||
+		// 		!projectsSticky.parentElement ||
+		// 		!main ||
+		// 		!projectSlider
+		// 	)
+		// 		return;
+
+		// 	// Get the total scrollable height of the page
+		// 	const scrollHeight = main.scrollHeight - window.innerHeight;
+		// 	// Get the current scroll position as a percentage
+		// 	let scrollPosition = main.scrollTop / scrollHeight;
+
+		// 	// Get the full width of the slider (considering the number of projects)
+		// 	const totalSliderWidth = projectSlider.scrollWidth;
+		// 	const viewportWidth = window.innerWidth;
+
+		// 	// Calculate how far we need to translate the slider (we map the scroll to slider width)
+		// 	let translateX = scrollPosition * (totalSliderWidth - viewportWidth);
+
+		// 	// Apply the translation (move the slider based on the calculated translateX)
+		// 	projectSlider.style.transform = `translate3d(${-translateX}px, 0 , 0)`;
+		// };
+
 		const scrollBlogPosts = () => {
 			const blogSection = blogSectionRef.current;
 			const blogPosts = blogPostsRefs.current;
@@ -164,9 +190,11 @@ const MainPage = () => {
 			leftText.style.transform = `translateX(${-textTrans}px)`;
 			rightText.style.transform = `translateX(${textTrans}px)`;
 		};
+		let animationFrameId: number;
 		function animate() {
 			animateProjects();
-			requestAnimationFrame(animate);
+			// requestAnimationFrame(animate);
+			animationFrameId = requestAnimationFrame(animate);
 		}
 		animate();
 		if (!main) return;
@@ -185,6 +213,7 @@ const MainPage = () => {
 				scrollDiscover();
 			});
 			window.removeEventListener("resize", setLimit);
+			cancelAnimationFrame(animationFrameId);
 		};
 		``;
 	}, []);
@@ -200,21 +229,17 @@ const MainPage = () => {
 				<div className="scroll__container">
 					<section id="hero">
 						<Canvas />
-
-						<div className="hero__container">
-							<div className="hero__title">
+						<div className="hero__container ">
+							<div className="hero__title select-none bg-[#000000] rounded-lg backdrop-blur-sm">
 								<h1 className="hero__title__header text__reveal ">ZOCK</h1>
 							</div>
-							<div className="hero__cta">
-								<h4>STUDIO</h4>
-							</div>
-						</div>
-					</section>
-
-					<section id="about">
-						<div className="about__container">
-							<div className="about__text">
-								<p>We enable rapid growth through digital creation</p>
+							<div className="hero__cta select-none flex flex-col items-center">
+								<h2 className="text-center leading-8 inline-block bg-[#000000] rounded-lg backdrop-blur-sm">
+									STUDIO
+								</h2>
+								<p className="bg-[#000000] rounded-lg backdrop-blur-sm">
+									We enable rapid growth through digital creation
+								</p>
 							</div>
 						</div>
 					</section>
@@ -222,25 +247,26 @@ const MainPage = () => {
 					<section id="video" ref={videoSectionRef}>
 						<div className="shim"></div>
 						<div className="video__sticky">
-							<video
+							<StartsCanvas />
+							{/* <video
 								ref={videoRef}
 								className="main__video"
 								autoPlay
 								muted
 								loop
 								playsInline
-								src="https://framerusercontent.com/modules/assets/BcIElVBzSD9P1ht5PhehnVyzTA~0iRDOKjSaNyoXJfsXAcSsdeEYSbJ8aAp3MvS5ts7LL0.mp4"></video>
+								src="https://framerusercontent.com/modules/assets/BcIElVBzSD9P1ht5PhehnVyzTA~0iRDOKjSaNyoXJfsXAcSsdeEYSbJ8aAp3MvS5ts7LL0.mp4"></video> */}
 							<div className="video__text__overlay">
 								<h2 ref={headerLeftRef} className="text__header__left">
-									ZOCK
+									PRO
 								</h2>
 								<h2 ref={headerRightRef} className="text__header__right">
-									STUDIO
+									JECT
 								</h2>
 							</div>
 						</div>
 					</section>
-
+					<ProjectSlider />
 					<section id="projects">
 						<div ref={projectsStickyRef} className="projects__sticky">
 							<div className="slider__container">
@@ -249,18 +275,24 @@ const MainPage = () => {
 										<div key={index} className={`project ${project.pos}`}>
 											<div className="image__container">
 												{project.image && (
-													<>
-														<VideoComponent
-															video={project.video}
-															image={project.image}
-														/>
-													</>
+													<Image
+														src={project.image}
+														alt={project.name}
+														fill
+														style={{ objectFit: "contain" }}
+													/>
+													// <>
+													// 	<VideoComponent
+													// 		// video={project.video}
+													// 		image={project.image}
+													// 	/>
+													// </>
 												)}
 											</div>
-											<div className="project__details">
+											{/* <div className="project__details">
 												<p className="project__title">{project.name}</p>
 												<p className="project__type">{project.type}</p>
-											</div>
+											</div> */}
 										</div>
 									))}
 								</div>
@@ -268,7 +300,7 @@ const MainPage = () => {
 						</div>
 					</section>
 
-					<section ref={blogSectionRef} id="blog">
+					{/* <section ref={blogSectionRef} id="blog">
 						<div className="blog__hero">
 							<h2 className="text__reveal">BLOG</h2>
 						</div>
@@ -297,7 +329,7 @@ const MainPage = () => {
 								</div>
 							</div>
 						))}
-					</section>
+					</section> */}
 
 					<section ref={circleSectionRef} id="circle__section">
 						<div className="circle__sticky">
@@ -311,10 +343,10 @@ const MainPage = () => {
 					<section id="discover">
 						<div ref={dContainerRef} className="discover__container">
 							<p ref={leftTextRef} className="text__left">
-								THIS SITE WAS DESIGNED BY OUR CREATIVE TEAM
+								THIS SITE WAS DESIGNED BY HAMID FATTAHI
 							</p>
 							<p ref={rightTextRef} className="text__right">
-								EXCLUSIVE FOR THE BRAND ZOCK
+								EXCLUSIVE FOR THE ZOCK TEAM AND THE BRAND
 							</p>
 						</div>
 					</section>

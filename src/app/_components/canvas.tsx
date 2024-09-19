@@ -102,7 +102,7 @@ const CanvasComponent = () => {
 				this.distance = 0;
 				this.force = 0;
 				this.angle = 0;
-				this.size = Math.floor(Math.random() * 5);
+				this.size = Math.floor(Math.random() * 3);
 				this.mouse = effect.mouse;
 				this.draw();
 			}
@@ -155,9 +155,10 @@ const CanvasComponent = () => {
 					radius: 2000,
 				};
 
-				window.addEventListener("mousemove", (e) => {
-					this.mouse.x = e.clientX; //* window.devicePixelRatio;
-					this.mouse.y = e.pageY; //* window.devicePixelRatio;
+				canvas!.addEventListener("mousemove", (e) => {
+					const rect = canvas!.getBoundingClientRect();
+					this.mouse.x = e.clientX - rect.left;
+					this.mouse.y = e.clientY - rect.top;
 				});
 
 				window.addEventListener("resize", () => {
