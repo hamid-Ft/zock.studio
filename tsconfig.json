@@ -29,7 +29,8 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"postcss.config.js",
-		"jest.config.js"
+		"jest.config.js",
+		"src/app/_components/loading-screen.jsx"
 	],
 	"exclude": ["node_modules"]
 }

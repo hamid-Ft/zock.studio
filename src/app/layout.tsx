@@ -1,31 +1,36 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import './globals.css';
+import Script from 'next/script';
+import LoadingScreen from '@/components/common/loader';
+import Lines from '@/components/common/Lines';
+import ProgressScroll from '@/components/common/ProgressScroll';
+import Cursor from '@/components/common/cusor';
 
 const codeBold = localFont({
 	src: [
 		{
-			path: "./fonts/CODE_Bold.otf",
-			weight: "800",
-			style: "normal",
+			path: './fonts/CODE_Bold.otf',
+			weight: '800',
+			style: 'normal',
 		},
 	],
-	variable: "--code-bold",
+	variable: '--code-bold',
 });
 const codeLight = localFont({
 	src: [
 		{
-			path: "./fonts/CODE_Bold.otf",
-			weight: "800",
-			style: "normal",
+			path: './fonts/CODE_Bold.otf',
+			weight: '800',
+			style: 'normal',
 		},
 	],
-	variable: "--code-light",
+	variable: '--code-light',
 });
 
 export const metadata: Metadata = {
-	title: "Zock Studio",
-	description: "Presentation Matters",
+	title: 'Zock Studio',
+	description: 'Presentation Matters',
 };
 
 export default function RootLayout({
@@ -36,6 +41,9 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={` ${codeLight.className} ${codeBold.className}`}>
+				<LoadingScreen />
+				{/* <Cursor /> */}
+				<ProgressScroll />
 				{children}
 			</body>
 		</html>

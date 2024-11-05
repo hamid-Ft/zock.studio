@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
 export interface ParticleProps {
 	x: number;
@@ -18,11 +18,7 @@ export type Mouse = {
 	radius: number;
 };
 
-export function debounce(
-	func: Function,
-	wait: number,
-	immediate: boolean = false
-) {
+export function debounce(func: Function, wait: number, immediate: boolean = false) {
 	let timeout: NodeJS.Timeout | undefined;
 	return function (this: any, ...args: any[]) {
 		const context = this;
@@ -58,7 +54,7 @@ const CanvasComponent = () => {
 	useEffect(() => {
 		let canvas = canvasRef.current;
 		if (canvas === null) return;
-		let ctx = canvas.getContext("2d");
+		let ctx = canvas.getContext('2d');
 		let animationFrameId: number | undefined;
 		if (!canvas || !ctx) return;
 
@@ -92,7 +88,7 @@ const CanvasComponent = () => {
 				this.x = Math.floor(x);
 				this.y = Math.floor(y);
 				this.ctx = this.effect.ctx;
-				this.ctx.fillStyle = "white";
+				this.ctx.fillStyle = 'white';
 				this.vx = 0;
 				this.vy = 0;
 				this.ease = 0.2;
@@ -119,15 +115,13 @@ const CanvasComponent = () => {
 				this.force = (-this.effect.mouse.radius / this.distance) * 8;
 
 				if (this.distance < this.effect.mouse.radius) {
-					this.angle = Math.atan2(this.dy, this.dx);
+					this.angle = Math.abs(Math.atan2(this.dy, this.dx));
 					this.vx += this.force * Math.cos(this.angle);
 					this.vy += this.force * Math.sin(this.angle);
 				}
 
-				this.x +=
-					(this.vx *= this.friction) + (this.originX - this.x) * this.ease;
-				this.y +=
-					(this.vy *= this.friction) + (this.originY - this.y) * this.ease;
+				this.x += (this.vx *= this.friction) + (this.originX - this.x) * this.ease;
+				this.y += (this.vy *= this.friction) + (this.originY - this.y) * this.ease;
 				this.draw();
 			}
 		}
@@ -139,11 +133,7 @@ const CanvasComponent = () => {
 			height: number;
 			particlesArray: Particle[];
 			gap: number;
-			constructor(
-				width: number,
-				height: number,
-				ctx: CanvasRenderingContext2D
-			) {
+			constructor(width: number, height: number, ctx: CanvasRenderingContext2D) {
 				this.width = width;
 				this.height = height;
 				this.ctx = ctx;
@@ -155,13 +145,13 @@ const CanvasComponent = () => {
 					radius: 2000,
 				};
 
-				canvas!.addEventListener("mousemove", (e) => {
+				canvas!.addEventListener('mousemove', (e) => {
 					const rect = canvas!.getBoundingClientRect();
 					this.mouse.x = e.clientX - rect.left;
 					this.mouse.y = e.clientY - rect.top;
 				});
 
-				window.addEventListener("resize", () => {
+				window.addEventListener('resize', () => {
 					if (canvas === null) return;
 					canvas.width = window.innerWidth; //* window.devicePixelRatio;
 					canvas.height = window.innerHeight; //* window.devicePixelRatio;

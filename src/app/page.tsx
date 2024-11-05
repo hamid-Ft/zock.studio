@@ -1,16 +1,12 @@
-"use client";
-// /components/MainPage.tsx
-import HeroSection from "./_components/hero-section";
-import AboutSection from "./_components/about-section";
-import VideoSection from "./_components/video-section";
-import { blogPosts, projects } from "@/data/projects";
-import Image from "next/image";
-import { useEffect, useRef } from "react";
-import { lerp } from "@/utils/lerp";
-import Canvas from "./_components/canvas";
-import VideoComponent from "./_components/videoComponent";
-import ProjectSlider from "./_components/projects-slider";
-import StartsCanvas from "./_components/start-canvas";
+'use client';
+import { blogPosts, projects } from '@/data/projects';
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+import { lerp } from '@/utils/lerp';
+import Canvas from './_components/canvas';
+import VideoComponent from './_components/videoComponent';
+import ProjectSlider from './_components/projects-slider';
+import StartsCanvas from './_components/start-canvas';
 
 const MainPage = () => {
 	const mainRef = useRef<HTMLElement | null>(null);
@@ -32,12 +28,12 @@ const MainPage = () => {
 	useEffect(() => {
 		const main = mainRef.current;
 
-		const textReveals = [...document.querySelectorAll(".text__reveal")];
+		const textReveals = [...document.querySelectorAll('.text__reveal')];
 		let callback = (entries: any[]) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
 					console.log(entry);
-					[...entry.target.querySelectorAll("span")].forEach((span, idx) => {
+					[...entry.target.querySelectorAll('span')].forEach((span, idx) => {
 						setTimeout(() => {
 							span.style.transform = `translateY(0)`;
 						}, (idx + 1) * 50);
@@ -46,13 +42,13 @@ const MainPage = () => {
 			});
 		};
 		let options = {
-			rootMargin: "0px",
+			rootMargin: '0px',
 			threshold: 1.0,
 		};
 		let observer = new IntersectionObserver(callback, options);
 		textReveals.forEach((text) => {
 			let string = (text as HTMLElement).innerText;
-			let html = "";
+			let html = '';
 			for (let i = 0; i < string.length; i++) {
 				html += `<span>${string[i]}</span>`;
 			}
@@ -73,10 +69,8 @@ const MainPage = () => {
 			// Text transformation
 			let textTrans = bottom - window.innerHeight;
 			textTrans = textTrans < 0 ? 0 : textTrans;
-			if (headerLeft)
-				headerLeft.style.transform = `translateX(${-textTrans}px)`;
-			if (headerRight)
-				headerRight.style.transform = `translateX(${textTrans}px)`;
+			if (headerLeft) headerLeft.style.transform = `translateX(${-textTrans}px)`;
+			if (headerRight) headerRight.style.transform = `translateX(${textTrans}px)`;
 		};
 
 		let projectTargetX = 0;
@@ -107,16 +101,9 @@ const MainPage = () => {
 		const animateProjects = () => {
 			const projectsSticky = projectsStickyRef.current;
 			const projectSlider = projectsSliderRef.current;
-			if (
-				!projectsSticky ||
-				!projectsSticky.parentElement ||
-				!main ||
-				!projectSlider
-			)
-				return;
+			if (!projectsSticky || !projectsSticky.parentElement || !main || !projectSlider) return;
 			let offsetTop = projectsSticky.parentElement.offsetTop;
-			let percentage =
-				((main.scrollTop - offsetTop) / window.innerHeight) * 100;
+			let percentage = ((main.scrollTop - offsetTop) / window.innerHeight) * 100;
 			percentage = percentage < 0 ? 0 : percentage > limit ? limit : percentage;
 			projectTargetX = percentage;
 			projectCurrentX = lerp(projectCurrentX, projectTargetX, 0.1);
@@ -198,21 +185,21 @@ const MainPage = () => {
 		}
 		animate();
 		if (!main) return;
-		main.addEventListener("scroll", () => {
+		main.addEventListener('scroll', () => {
 			animateVideo();
 			scrollCircle();
 			scrollDiscover();
 		});
-		window.addEventListener("resize", setLimit);
+		window.addEventListener('resize', setLimit);
 		return () => {
-			main.removeEventListener("scroll", () => {
+			main.removeEventListener('scroll', () => {
 				animateVideo();
 				scrollBlogPosts();
 
 				scrollCircle();
 				scrollDiscover();
 			});
-			window.removeEventListener("resize", setLimit);
+			window.removeEventListener('resize', setLimit);
 			cancelAnimationFrame(animationFrameId);
 		};
 		``;
@@ -279,7 +266,7 @@ const MainPage = () => {
 														src={project.image}
 														alt={project.name}
 														fill
-														style={{ objectFit: "contain" }}
+														style={{ objectFit: 'contain' }}
 													/>
 													// <>
 													// 	<VideoComponent
@@ -367,7 +354,13 @@ const MainPage = () => {
 					<section id="footer">
 						<div className="footer__container h-96">
 							<div className="footer__title">
-								<h2 className="text__reveal">ZOCK</h2>
+								<span className="flex items-center  leading-none text-black text-[clamp(2rem,30cqi,20rem)]">
+									Z
+									<div className="letter-o mr-2 -translate-y-2">
+										<div className="counter-o"></div>
+									</div>
+									CK
+								</span>
 							</div>
 						</div>
 					</section>
