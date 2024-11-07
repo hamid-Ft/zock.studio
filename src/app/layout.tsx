@@ -3,9 +3,9 @@ import localFont from 'next/font/local';
 import './globals.css';
 import Script from 'next/script';
 import LoadingScreen from '@/components/common/loader';
-import Lines from '@/components/common/Lines';
-import ProgressScroll from '@/components/common/ProgressScroll';
-import Cursor from '@/components/common/cusor';
+import { Hind } from 'next/font/google';
+
+const hind = Hind({ subsets: ['latin'], weight: '700', style: 'normal', variable: '--hind-bold' });
 
 const codeBold = localFont({
 	src: [
@@ -40,10 +40,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={` ${codeLight.className} ${codeBold.className}`}>
-				<LoadingScreen />
+			<body className={` ${codeLight.className} ${codeBold.className} ${hind.className}`}>
+				{/* <LoadingScreen /> */}
 				{/* <Cursor /> */}
-				<ProgressScroll />
+				{/* <ProgressScroll /> */}
 				{children}
 			</body>
 		</html>

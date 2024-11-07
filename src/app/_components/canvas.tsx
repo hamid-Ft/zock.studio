@@ -202,6 +202,7 @@ const CanvasComponent = () => {
 		}
 
 		requestAnimationFrame(animate);
+
 		return () => {
 			if (animationFrameId !== undefined) {
 				cancelAnimationFrame(animationFrameId);
@@ -209,7 +210,7 @@ const CanvasComponent = () => {
 		};
 	}, [dimensions]);
 
-	return <canvas ref={canvasRef} className="absolute  inset-0"></canvas>;
+	return <canvas ref={canvasRef} className="absolute inset-0"></canvas>;
 };
 
 export default CanvasComponent;

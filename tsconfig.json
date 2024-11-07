@@ -30,7 +30,10 @@
 		".next/types/**/*.ts",
 		"postcss.config.js",
 		"jest.config.js",
-		"src/app/_components/loading-screen.jsx"
+		"src/app/_components/loading-screen.jsx",
+		"src/components/designs/text-fluid/text.js",
+		"src/components/designs/text-fluid/main.js",
+		"src/components/designs/text-fluid/text-fluid.jsx"
 	],
 	"exclude": ["node_modules"]
 }

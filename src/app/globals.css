@@ -51,6 +51,10 @@ h6 {
 	text-wrap: balance;
 }
 
+.zock {
+	font-family: var(--code-bold);
+}
+
 li,
 p,
 figcaption {
